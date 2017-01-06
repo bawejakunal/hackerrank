@@ -9,8 +9,23 @@ def is_sorted(arr):
     for i in xrange(len(arr) - 1):
         if arr[i] > arr[i + 1]:
             return False
-    
+
     return True
+
+def check_index_swap(left, right, arr, n):
+    """
+    basically swap or reverse operation both effectively
+    swap positions of arr[left] and arr[right]. So make
+    sure that this swapped order also ensures the overall
+    sorted order of arr
+    """
+    if left > 0 and arr[right] < arr[left - 1]:
+        return False
+    if right < n - 1 and arr[left] > arr[right + 1]:
+        return False
+
+    return True
+
 
 def main():
     """
@@ -34,34 +49,23 @@ def main():
                 right = i
                 break
 
-        #try swap
-        possible = False
-        if is_sorted(arr[right:right+1] + arr[left+1:right] + arr[left:left+1]):
-            possible = True
-            if left > 0 and arr[right] < arr[left - 1]:
-                possible = False
-            if right < n - 1 and arr[left] > arr[right + 1]:
-                possible = False
-            
-            if possible is True:
+        possible = check_index_swap(left, right, arr, n)
+        if possible is False:
+            print 'no'
+        else:
+            #try swap
+            if is_sorted(arr[right:right+1] + arr[left+1:right]
+                         + arr[left:left+1]):
                 print 'yes'
                 print 'swap', left+1, right+1
 
-        if possible is False:
             #try reverse
-            if is_sorted(arr[left:right+1][::-1]):
-                possible = True
-                if left > 0 and arr[right] < arr[left - 1]:
-                    possible = False
-                if right < n - 1 and arr[left] > arr[right + 1]:
-                    possible = False
-              
-                if possible is True:
-                    print 'yes'
-                    print 'reverse', left+1, right+1
+            elif is_sorted(arr[left:right+1][::-1]):
+                print 'yes'
+                print 'reverse', left+1, right+1
 
-        if possible is False:
-            print 'no'
+            else:
+                print 'no'
 
 if __name__ == '__main__':
     main()
