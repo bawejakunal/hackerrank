@@ -29,7 +29,7 @@ def check_index_swap(left, right, arr, n):
 
 def main():
     """
-    find longest reversed array
+    find middle subarray that disturbs sorted order
     """
     n = int(raw_input().strip())
     arr = map(int, raw_input().strip().split())
